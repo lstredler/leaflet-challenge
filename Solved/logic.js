@@ -75,12 +75,12 @@ var earthquakes = L.geoJSON(earthquakeData, {
   pointToLayer: function (feature, latlng) {
     var color;
     var r = 255;
-    var g = Math.floor(255-80*feature.properties.mag);
-    var b = Math.floor(255-80*feature.properties.mag);
+    var g = Math.floor(255-100*feature.properties.mag);
+    var b = Math.floor(155-100*feature.properties.mag);
     color= "rgb("+r+" ,"+g+","+b+")"
     
     var geojsonMarkerOptions = {
-      radius: 4*feature.properties.mag,
+      radius: 5*feature.properties.mag,
       fillColor: color,
       color: "white",
       fillOpacity: 1
