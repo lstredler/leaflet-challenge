@@ -94,3 +94,4 @@ var earthquakes = L.geoJSON(earthquakeData, {
   // Sending our earthquakes layer to the createMap function
   createMap(earthquakes);
   };
+
