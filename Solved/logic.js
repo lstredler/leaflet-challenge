@@ -70,29 +70,27 @@ function createMap(earthquakes) {
 }
 
 //MARKERS
-  var earthquakes = L.geoJSON(earthquakeData, {
-    onEachFeature: onEachFeature,
-    pointToLayer: function (feature, latlng) {
-      var color;
-      var r = 255;
-      var g = Math.floor(255-80*feature.properties.mag);
-      var b = Math.floor(255-80*feature.properties.mag);
-      color= "rgb("+r+" ,"+g+","+b+")"
-      
-      var geojsonMarkerOptions = {
-        radius: 4*feature.properties.mag,
-        fillColor: color,
-        color: "white",
-        weight: 0.5,
-        opacity: 2,
-        fillOpacity: 0.9
-      };
-      return L.circleMarker(latlng, geojsonMarkerOptions);
-    }
-  });
+var earthquakes = L.geoJSON(earthquakeData, {
+  onEachFeature: onEachFeature,
+  pointToLayer: function (feature, latlng) {
+    var color;
+    var r = 255;
+    var g = Math.floor(255-80*feature.properties.mag);
+    var b = Math.floor(255-80*feature.properties.mag);
+    color= "rgb("+r+" ,"+g+","+b+")"
+    
+    var geojsonMarkerOptions = {
+      radius: 4*feature.properties.mag,
+      fillColor: color,
+      color: "white",
+      fillOpacity: 1
+    };
+    return L.circleMarker(latlng, geojsonMarkerOptions);
+  }
+});
 
-  // Sending our earthquakes layer to the createMap function
-  createMap(earthquakes);
+// Sending our earthquakes layer to the createMap function
+createMap(earthquakes);
 }
 
 
