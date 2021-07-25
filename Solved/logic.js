@@ -72,29 +72,25 @@ function createMap(earthquakes) {
 
 //MARKER CIRCLES 
 var earthquakes = L.geoJSON(earthquakeData, {
-  onEachFeature: onEachFeature,
-  pointToLayer: function (feature, latlng) {
-    var color;
-    var r = 255;
-    var g = Math.floor(255-100*feature.properties.mag);
-    var b = Math.floor(155-100*feature.properties.mag);
-    color= "rgb("+r+" ,"+g+","+b+")"
-    
-    var geojsonMarkerOptions = {
-      radius: 5*feature.properties.mag,
-      fillColor: color,
-      color: "white",
-      fillOpacity: 1
-    };
-    return L.circleMarker(latlng, geojsonMarkerOptions);
-  }
-});
-
-// Sending our earthquakes layer to the createMap function
-createMap(earthquakes);
-}
-
-
-
-
-
+    onEachFeature: onEachFeature,
+    pointToLayer: function (feature, latlng) {
+      var color;
+      //https://www.rapidtables.com/web/color/RGB_Color.html///
+      var r = 255;
+      var y = Math.floor(255-215*feature.properties.mag);
+      var z = Math.floor(50*feature.properties.mag);
+      color= "rgb("+r+" ,"+y+","+z+")"
+      
+      var geojsonMarkerOptions = {
+        radius: 5*feature.properties.mag,
+        color: "white",
+        fillColor: color,
+        fillOpacity: 1
+      };
+      return L.circleMarker(latlng, geojsonMarkerOptions);
+    }
+  });
+  
+  // Sending our earthquakes layer to the createMap function
+  createMap(earthquakes);
+  };
