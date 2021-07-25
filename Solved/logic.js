@@ -33,10 +33,10 @@ function createMap(earthquakes) {
     accessToken: API_KEY
   });
 
-  var outdoorsmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+  var darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
     maxZoom: 18,
-    id: "mapbox.outdoors",
+    id: "dark-v10",
     accessToken: API_KEY
   });
 
@@ -44,7 +44,7 @@ function createMap(earthquakes) {
   var baseMaps = {
     "Satelite": satellitemap,
     "Grayscale": grayscalemap,
-    "Outdoors": outdoorsmap
+    "Outdoors": darkmap
   };
 
   // Create overlay object to hold our overlay layer
