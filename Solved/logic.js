@@ -1,6 +1,5 @@
 // Store our API endpoint inside queryUrl
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
-var platesURL = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json"
 
 // Perform a GET request to the query URL
 d3.json(queryUrl).then(function(data) {
@@ -20,7 +19,24 @@ function createFeatures(earthquakeData) {
   // Create a GeoJSON layer containing the features array on the earthquakeData object
   // Run the onEachFeature function once for each piece of data in the array
   var earthquakes = L.geoJSON(earthquakeData, {
-    onEachFeature: onEachFeature
+    onEachFeature: onEachFeature,
+    pointToLayer: function (feature, latlng) {
+      var color;
+      var r = 255;
+      var g = Math.floor(255-80*feature.properties.mag);
+      var b = Math.floor(255-80*feature.properties.mag);
+      color= "rgb("+r+" ,"+g+","+ b+")"
+      
+      var geojsonMarkerOptions = {
+        radius: 4*feature.properties.mag,
+        fillColor: color,
+        color: "black",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.8
+      };
+      return L.circleMarker(latlng, geojsonMarkerOptions);
+    }
   });
 
   // Sending our earthquakes layer to the createMap function
@@ -35,28 +51,26 @@ function createMap(earthquakes) {
     maxZoom: 18,
     id: "mapbox.satellite",
     accessToken: API_KEY
-});
+  });
   
-  var grayscale = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-    attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-    tileSize: 512,
+  var grayscalemap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+    attribution: "<a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     maxZoom: 18,
-    zoomOffset: -1,
     id: "mapbox/streets-v11",
     accessToken: API_KEY
   });
 
-  var outdoorsmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+  var outdoorsmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
     maxZoom: 18,
     id: "mapbox.outdoors",
     accessToken: API_KEY
-});
+  });
 
   // Define a baseMaps object to hold our base layers
   var baseMaps = {
     "Satelite": satellitemap,
-    "Grayscale": grayscale,
+    "Grayscale": grayscalemap,
     "Outdoors": outdoorsmap
   };
 
