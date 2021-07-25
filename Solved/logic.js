@@ -1,6 +1,7 @@
 // Store our API endpoint inside queryUrl
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
+
 // Perform a GET request to the query URL
 d3.json(queryUrl).then(function(data) {
   // Once we get a response, send the data.features object to the createFeatures function
@@ -33,10 +34,10 @@ function createMap(earthquakes) {
     accessToken: API_KEY
   });
 
-  var darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+  var outdoor = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
     maxZoom: 18,
-    id: "satellite-streets",
+    id: "outdoors-v11",
     accessToken: API_KEY
   });
 
@@ -44,7 +45,7 @@ function createMap(earthquakes) {
   var baseMaps = {
     "Satelite": satellitemap,
     "Grayscale": grayscalemap,
-    "Outdoors": darkmap
+    "Outdoors": outdoor
   };
 
   // Create overlay object to hold our overlay layer
@@ -69,7 +70,7 @@ function createMap(earthquakes) {
   }).addTo(myMap);
 }
 
-//MARKERS
+//MARKER CIRCLES 
 var earthquakes = L.geoJSON(earthquakeData, {
   onEachFeature: onEachFeature,
   pointToLayer: function (feature, latlng) {
