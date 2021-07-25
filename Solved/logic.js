@@ -16,32 +16,6 @@ function createFeatures(earthquakeData) {
       "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
   }
 
-  // Create a GeoJSON layer containing the features array on the earthquakeData object
-  // Run the onEachFeature function once for each piece of data in the array
-  var earthquakes = L.geoJSON(earthquakeData, {
-    onEachFeature: onEachFeature,
-    pointToLayer: function (feature, latlng) {
-      var color;
-      var r = 255;
-      var g = Math.floor(255-80*feature.properties.mag);
-      var b = Math.floor(255-80*feature.properties.mag);
-      color= "rgb("+r+" ,"+g+","+ b+")"
-      
-      var geojsonMarkerOptions = {
-        radius: 4*feature.properties.mag,
-        fillColor: color,
-        color: "black",
-        weight: 1,
-        opacity: 1,
-        fillOpacity: 0.8
-      };
-      return L.circleMarker(latlng, geojsonMarkerOptions);
-    }
-  });
-
-  // Sending our earthquakes layer to the createMap function
-  createMap(earthquakes);
-}
 
 function createMap(earthquakes) {
 
@@ -96,6 +70,31 @@ function createMap(earthquakes) {
   }).addTo(myMap);
 }
 
+//MARKERS
+  var earthquakes = L.geoJSON(earthquakeData, {
+    onEachFeature: onEachFeature,
+    pointToLayer: function (feature, latlng) {
+      var color;
+      var r = 255;
+      var g = Math.floor(255-80*feature.properties.mag);
+      var b = Math.floor(255-80*feature.properties.mag);
+      color= "rgb("+r+" ,"+g+","+b+")"
+      
+      var geojsonMarkerOptions = {
+        radius: 4*feature.properties.mag,
+        fillColor: color,
+        color: "white",
+        weight: 0.5,
+        opacity: 2,
+        fillOpacity: 0.9
+      };
+      return L.circleMarker(latlng, geojsonMarkerOptions);
+    }
+  });
+
+  // Sending our earthquakes layer to the createMap function
+  createMap(earthquakes);
+}
 
 
 
